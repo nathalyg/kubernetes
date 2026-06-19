@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: fintech
+resources:
+  - 01-namespace.yaml
+  - 02-security-config.yaml
+  - 03-database.yaml
+  - 04-backend.yaml
+  - 05-frontend.yaml

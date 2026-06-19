@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fintech-db-secret
+  namespace: fintech
+type: Opaque
+stringData:
+  DB_USER: fintech_user
+  DB_PASSWORD: fintech_pass123
