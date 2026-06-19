@@ -53,7 +53,7 @@ Archivos incluidos:
 - 01-namespace.yaml: namespace fintech
 
 - 02-security-config.yaml: Secret para credenciales de base de datos
-- 03-database.yaml: Service DB + StatefulSet con PVC dinamico
+- 03-database.yaml: Service DB + PV estatico + PVC + StatefulSet
 - 04-backend.yaml: Deployment + Service ClusterIP
 - 05-frontend.yaml: Deployment + Service LoadBalancer
 
@@ -73,8 +73,8 @@ Resultado esperado:
 
 - frontend y backend con replicas disponibles.
 - StatefulSet db en Running.
- - PVC Bound.
- - PV creado dinamicamente por la StorageClass gp2 disponible en tu EKS.
+- PVC Bound.
+- PV estatico db-static-pv en estado Bound.
 
 ## 5) Verificacion de servicios (criterio 3)
 
@@ -125,15 +125,15 @@ Puntos de seguridad aplicados:
 
 ## 7) Persistencia (PV y PVC)
 
-La persistencia se define en el StatefulSet mediante volumeClaimTemplates.
-En EKS, la StorageClass gp2 disponible en tu cluster aprovisiona PV dinamicamente.
+La persistencia se define con un PV estatico y un PVC pre-creado.
+Este enfoque evita depender de permisos IAM adicionales para el driver EBS CSI en AWS Academy.
 
 Evidencias:
 
 ```bash
 kubectl get pvc -n fintech
 kubectl get pv
-kubectl describe pvc db-data-db-0 -n fintech
+kubectl describe pvc db-data-pvc -n fintech
 ```
 
 Prueba de persistencia sugerida:
@@ -189,7 +189,7 @@ EKS
 - Despliegue de frontend, backend y base de datos.
 - Configuracion de servicios.
 - Seguridad con Secret.
-- Persistencia con PVC/PV dinamico.
+- Persistencia con PV y PVC estaticos.
 
 ### Resultados
 
@@ -216,8 +216,10 @@ EKS
 ### 03-database.yaml
 
 - Crea el Service db de tipo ClusterIP para acceso interno en el cluster.
+- Crea un PersistentVolume estatico llamado db-static-pv.
+- Crea un PersistentVolumeClaim llamado db-data-pvc que se enlaza al PV estatico.
 - Crea el StatefulSet db (1 replica) con imagen postgres:15-alpine.
-- Define persistencia con volumeClaimTemplates, lo que crea automaticamente un PVC para la base de datos.
+- Monta el PVC db-data-pvc en /var/lib/postgresql/data para persistencia.
 
 ### 04-backend.yaml
 
