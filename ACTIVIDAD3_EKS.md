@@ -51,6 +51,7 @@ kubectl apply -k kubernetes
 Archivos incluidos:
 
 - 01-namespace.yaml: namespace fintech
+
 - 02-security-config.yaml: Secret para credenciales de base de datos
 - 03-database.yaml: Service DB + StatefulSet con PVC dinamico
 - 04-backend.yaml: Deployment + Service ClusterIP
@@ -72,8 +73,8 @@ Resultado esperado:
 
 - frontend y backend con replicas disponibles.
 - StatefulSet db en Running.
-- PVC Bound.
-- PV creado dinamicamente por la StorageClass gp3.
+ - PVC Bound.
+ - PV creado dinamicamente por la StorageClass gp2 disponible en tu EKS.
 
 ## 5) Verificacion de servicios (criterio 3)
 
@@ -125,7 +126,7 @@ Puntos de seguridad aplicados:
 ## 7) Persistencia (PV y PVC)
 
 La persistencia se define en el StatefulSet mediante volumeClaimTemplates.
-En EKS, la StorageClass gp3 aprovisiona PV dinamicamente.
+En EKS, la StorageClass gp2 disponible en tu cluster aprovisiona PV dinamicamente.
 
 Evidencias:
 
