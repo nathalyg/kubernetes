@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: nathyguaillas/fintech-frontend:v1
+          image: nathyguaillas/fintech-frontend:v2
           ports:
             - containerPort: 80
               name: http

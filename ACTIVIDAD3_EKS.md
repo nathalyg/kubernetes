@@ -28,11 +28,11 @@ Si necesitas regenerar imagenes y publicarlas en Docker Hub:
 ```bash
 # Desde la raiz del repo FinTech-App-Unir-main-NGuaillas
 
-docker build -t nathyguaillas/fintech-backend:v1 ./backend
-docker push nathyguaillas/fintech-backend:v1
+docker build -t nathyguaillas/fintech-backend:v2 ./backend
+docker push nathyguaillas/fintech-backend:v2
 
-docker build -t nathyguaillas/fintech-frontend:v1 ./frontend
-docker push nathyguaillas/fintech-frontend:v1
+docker build -t nathyguaillas/fintech-frontend:v2 ./frontend
+docker push nathyguaillas/fintech-frontend:v2
 ```
 
 Si publicas tags nuevos (por ejemplo v2), actualiza las imagenes en:
@@ -223,13 +223,13 @@ EKS
 
 ### 04-backend.yaml
 
-- Crea el Deployment backend (1 replica) con imagen nathyguaillas/fintech-backend:v1.
+- Crea el Deployment backend (1 replica) con imagen nathyguaillas/fintech-backend:v2.
 - Inyecta variables de entorno para conectar con la base de datos.
 - Crea el Service backend de tipo ClusterIP para consumo interno desde frontend/nginx.
 
 ### 05-frontend.yaml
 
-- Crea el Deployment frontend (1 replica) con imagen nathyguaillas/fintech-frontend:v1.
+- Crea el Deployment frontend (1 replica) con imagen nathyguaillas/fintech-frontend:v2.
 - Crea el Service frontend de tipo LoadBalancer para acceso desde Internet por DNS del balanceador de AWS.
 
 ### kustomization.yaml
